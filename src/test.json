@@ -1,5 +1,5 @@
 {
-  "name":"Lorem ipsum dolor sit amet",
+  "name":"Name",
   "description":"Nunc gravida, sapien vitae malesuada lobortis, sem nibh consequat nisl, at porta justo enim eget tellus. \nSuspendisse in finibus sapien, suscipit dignissim nulla. Donec vel porttitor nisi, et varius ante. Ut eu dolor nisi. Ut eu dolor mauris. Integer vitae blandit est. Ut ut dui nisl. Cras pellentesque dignissim lobortis. Donec id eros tincidunt, malesuada leo nec, sagittis nulla. Curabitur efficitur aliquam nisi, eget sollicitudin lacus sodales in.",
   "accentColor":"221f20",
   "accentColorSecondary":"03A9F4",
@@ -112,7 +112,7 @@
           "id":204,
           "url":"img/items/03da727-4b966.png",
           "name":"03da727-4b966.png",
-          "media_type":"image",
+          "media_type":"image"
         }
       ],
       "categories":[304],
