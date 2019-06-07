@@ -13,21 +13,35 @@
       "active": true
     },
     {
+      "id": 303,
+      "name": "Category 1",
+      "positionNumber": 1,
+      "items": [106, 102],
+      "active": true
+    },
+    {
       "id": 304,
+      "name": "Category 1",
+      "positionNumber": 1,
+      "items": [106, 102],
+      "active": true
+    },
+    {
+      "id": 305,
       "name": "Category 4",
       "positionNumber": 4,
       "items": [104],
       "active": true
     },
     {
-      "id": 303,
+      "id": 306,
       "name": "Category 3",
       "positionNumber": 3,
       "items": [109, 103, 108],
       "active": false
     },
     {
-      "id": 301,
+      "id": 307,
       "name": "Category 2",
       "positionNumber": 2,
       "items": [110, 101, 107, 105],
