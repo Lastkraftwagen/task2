@@ -1,0 +1,30 @@
+#page {
+    background-color: red;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    flex-direction: row;
+}
+
+#items_holder {
+    background-color: blueviolet;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+#category_name {
+    background-color: aliceblue;
+    height: 70px;
+}
+
+.item{
+    background-color: aquamarine;
+    margin: 10px;   
+    height: 30px;
+}
+
+.selected {
+    margin: 0;
+    background: aqua;
+}

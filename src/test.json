@@ -14,35 +14,35 @@
     },
     {
       "id": 303,
-      "name": "Category 1",
-      "positionNumber": 1,
+      "name": "Category 2",
+      "positionNumber": 4,
       "items": [106, 102],
       "active": true
     },
     {
       "id": 304,
-      "name": "Category 1",
-      "positionNumber": 1,
+      "name": "Category 3",
+      "positionNumber": 5,
       "items": [106, 102],
       "active": true
     },
     {
       "id": 305,
       "name": "Category 4",
-      "positionNumber": 4,
+      "positionNumber": 6,
       "items": [104],
       "active": true
     },
     {
       "id": 306,
-      "name": "Category 3",
+      "name": "Category 5",
       "positionNumber": 3,
       "items": [109, 103, 108],
       "active": false
     },
     {
       "id": 307,
-      "name": "Category 2",
+      "name": "Category 6",
       "positionNumber": 2,
       "items": [110, 101, 107, 105],
       "active": true
