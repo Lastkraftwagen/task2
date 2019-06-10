@@ -23,17 +23,45 @@
 .item{
     background-color: aquamarine;
     margin: 10px;   
-    height: 30px;
+    padding: 10px;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    transition: 0.5s all;
+
 }
 
 .item:hover{
     background-color: white;
 }
 
-.selected {
+._name{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 16px;
     margin: 0;
-    background: aqua;
+}
+._description{
+    height: auto;
+    font-size: 12px;
+    margin: 0;
+}
+
+._img
+{
+    height: 50px;
+    width: 50px;
+    margin: 3px;
+}
+
+.selected {
+    margin-right: 0;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    box-shadow: -5px 0 5px black;
+    transition: 0.5s all;
+    background-color: wheat;
 }
 
 #item_full{
@@ -84,4 +112,9 @@
     background-color: aliceblue;
     opacity: 0.7;
     white-space: pre-line;
+}
+
+footer{
+    background-color: beige;
+    height: 80px;
 }

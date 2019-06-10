@@ -1,3 +1,4 @@
+
 let data;
 
 const fetchAll = async () => {
@@ -17,31 +18,47 @@ const initialise = () => {
 		data['name'];
 	document.getElementById("descr").firstElementChild.innerHTML =
 		data['description'];
-	const mas = data.categories;
-	mas.sort((a, b) => {
-		if (a.positionNumber < b.positionNumber) return -1;
-		if (a.positionNumber > b.positionNumber) return 1;
-		return 0;
-	});
-	const cat_nodes = [];
-	for (let i = 0; i < mas.length; i++) {
-		let node = document.createElement("div");
-		node.className = 'category_plane';
-		node.innerHTML = mas[i].name;
-		node.setAttribute("id", mas[i].id)
-		cat_nodes.push(node);
+
+	if (data.enable_multiple_lists == true) {
+		const mas = data.categories;
+		mas.sort((a, b) => {
+			if (a.positionNumber < b.positionNumber) return -1;
+			if (a.positionNumber > b.positionNumber) return 1;
+			return 0;
+		});
+		const cat_nodes = [];
+		for (let i = 0; i < mas.length; i++) {
+			if(mas[i].active){
+				let node = document.createElement("div");
+				node.className = 'category_plane';
+				node.innerHTML = mas[i].name;
+				node.setAttribute("id", mas[i].id)
+				cat_nodes.push(node);
+			}
+		}
+		cat_nodes.forEach(element => {
+			document.getElementById("categories").appendChild(element);
+		})
+		const temp = document.getElementById('categories').children;
+		for (let i = 0; i < temp.length; i++) {
+			temp[i].addEventListener('click', OnCategoryClick);
+		}	
+		categoryClick(temp[0].id, temp[0].innerHTML)
 	}
-	cat_nodes.forEach(element => {
-		document.getElementById("categories").appendChild(element);
-	})
-	const temp = document.getElementById('categories').children;
-	for (let i = 0; i < temp.length; i++) {
-		temp[i].addEventListener('click', OnCategoryClick);
+	else{
+		document.getElementById('category_name').style.display = 'none';
+		showItems(data.items);
+		
 	}
-	categoryClick(temp[0].id, temp[0].innerHTML)
 }
 
 document.addEventListener('loadend', fetchAll())
+
+function OnCategoryClick(e) {
+	let id = e.srcElement.id;
+	let text = e.srcElement.innerHTML;
+	categoryClick(id, text);
+}
 
 function categoryClick(id, text) {
 	let selected_cat;
@@ -59,7 +76,12 @@ function categoryClick(id, text) {
 			items.push(element)
 		}
 	});
-	el = document.querySelector("#items_holder");
+	showItems(items);
+}
+
+function showItems(items)
+{
+	let el = document.querySelector("#items_holder");
 	removeElements([...document.querySelectorAll(".item")]);
 	items.sort((a, b) => {
 		if (a.position < b.position) return -1;
@@ -71,22 +93,32 @@ function categoryClick(id, text) {
 		let node = document.createElement("div");
 		if (counter == 0) node.className = "item selected";
 		else node.className = "item";
-		node.addEventListener('click', OnItemClick);
+		node.setAttribute('onclick', "OnItemClick("+element.id+")");
 		node.setAttribute("id", element.id);
 		counter++;
-		node.innerHTML = element.title;
-		el.appendChild(node);
+		let img = document.createElement('img');
+		img.className='_img';
+		img.src = element.gallery_images[0].url;
+		let descr = document.createElement('p');
+		let title = document.createElement('p');
+		title.classList.toggle('_name');
+		title.innerHTML = element.title;
+		descr.classList.toggle('_description');
+		descr.innerHTML = element.description;
+		let div = document.createElement('div');
+		node.append(img);
+		div.append(title);
+		div.append(descr);
+		node.append(div);
+		el.append(node);
 	});
 	itemClick(document.querySelector(".selected"));
 }
 
-
-function OnCategoryClick(e) {
-	let id = e.srcElement.id;
-	let text = e.srcElement.innerHTML;
-	categoryClick(id, text);
+function OnItemClick(id) {
+	let selected_item = document.getElementById(id);
+	itemClick(selected_item);
 }
-
 
 const itemClick = (selected_item) => {
 	let el = document.querySelector(".selected");
@@ -133,23 +165,23 @@ const itemClick = (selected_item) => {
 		});
 		let arrow = document.createElement("a")
 		arrow.classList.toggle('prev');
-		arrow.setAttribute("onclick","plusSlides(-1)");
+		arrow.setAttribute("onclick", "plusSlides(-1)");
 		arrow.innerHTML = "&#10094";
 		container.appendChild(arrow);
 
 		arrow = document.createElement("a")
 		arrow.classList.toggle('next');
 		arrow.innerHTML = "&#10095";
-		arrow.setAttribute("onclick","plusSlides(1)");
+		arrow.setAttribute("onclick", "plusSlides(1)");
 		container.appendChild(arrow);
 
 		let dots_container = document.createElement('div');
 		dots_container.className = 'dot_panel';
 		dots_container.style.textAlign = 'center';
-		for (let i = 1; i < images.length+1; i++) {
+		for (let i = 1; i < images.length + 1; i++) {
 			let dot = document.createElement('span');
 			dot.className = 'dot';
-			dot.setAttribute('onclick', "currentSlide("+i+")");
+			dot.setAttribute('onclick', "currentSlide(" + i + ")");
 			dots_container.appendChild(dot);
 		}
 		container.appendChild(dots_container);
@@ -158,8 +190,7 @@ const itemClick = (selected_item) => {
 	}
 	removeElements([...document.querySelector("#video_holder").children])
 
-	if(item.videoUrl !=null)
-	{
+	if (item.videoUrl != null) {
 		let title = document.createElement("p");
 		title.className = 'video_title';
 		title.innerHTML = item.videoTitle;
@@ -173,15 +204,10 @@ const itemClick = (selected_item) => {
 	}
 }
 
-function OnItemClick(e) {
-	let selected_item = e.srcElement;
-	itemClick(selected_item);
-}
-
-const removeElements = (elms) => { 
-	if(Array.isArray(elms)){ 
-		elms.forEach(el => el.remove()) 
-	} 
+const removeElements = (elms) => {
+	if (Array.isArray(elms)) {
+		elms.forEach(el => el.remove())
+	}
 };
 
 function getFrame(url) {
@@ -189,8 +215,8 @@ function getFrame(url) {
 	var match = url.match(regExp);
 
 	if (match && match[2].length == 11) {
-			return "//www.youtube.com/embed/"+match[2];
+		return "//www.youtube.com/embed/" + match[2];
 	} else {
-			return 'error';
+		return 'error';
 	}
 }

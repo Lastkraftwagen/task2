@@ -24,14 +24,14 @@
       "name": "Category 3",
       "positionNumber": 3,
       "items": [109, 103, 108],
-      "active": false
+      "active": true
     },
     {
       "id": 301,
       "name": "Category 2",
       "positionNumber": 2,
       "items": [110, 101, 107, 105],
-      "active": true
+      "active": false
     }
   ],
   "icon": {
@@ -142,6 +142,12 @@
           "id":207,
           "url":"img/items/IMG_0085-c9fa8.JPG",
           "name":"IMG_0085-c9fa8.JPG",
+          "media_type":"image"
+        },
+        {
+          "id":201,
+          "url":"img/items/87536378_thinkstockphotos-177521527-7ff9c.jpg",
+          "name":"87536378_thinkstockphotos-177521527-7ff9c.jpg",
           "media_type":"image"
         }
       ],
