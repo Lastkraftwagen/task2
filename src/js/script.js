@@ -142,7 +142,7 @@ const itemClick = (selected_item) => {
 	document.getElementById("item_descr").innerText = item.description;
 
 	let plain_descr = item.long_description;
-	// document.getElementById("item_full_descr").innerHTML = plain_descr;
+	document.getElementById("item_full_descr").innerHTML = plain_descr;
 
 	removeElements([...document.querySelector("#slider").children])
 	let images = item.gallery_images;
