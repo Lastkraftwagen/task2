@@ -1,0 +1,15 @@
+.video_holder
+{
+padding: 20px;
+width: 600px;
+}
+
+.video_title{
+  background-color: aliceblue;
+
+}
+
+.video{
+  height: 600px;
+  width: 100%;
+}
