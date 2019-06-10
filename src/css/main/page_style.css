@@ -15,8 +15,15 @@
 }
 
 #category_name {
-    background-color: aliceblue;
+    background-color: #af2afc;
     height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#category_name p{
+    align-self: center;
+    border-bottom: 1px;
 
 }
 
@@ -36,21 +43,21 @@
     background-color: white;
 }
 
-._name{
+.item_name{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 16px;
     margin: 0;
 }
-._description{
+.item_description{
     height: auto;
     font-size: 12px;
     margin: 0;
 }
 
-._img
+.item_img
 {
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 70px;
     margin: 3px;
 }
 

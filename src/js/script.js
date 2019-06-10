@@ -19,6 +19,12 @@ const initialise = () => {
 	document.getElementById("descr").firstElementChild.innerHTML =
 		data['description'];
 
+		let link = document.createElement('link');
+		link.setAttribute("rel", "shortcut icon");
+		link.setAttribute("type", "image/png");
+		link.href = data.icon.file.url;
+		document.getElementsByTagName('head')[0].append(link);
+
 	if (data.enable_multiple_lists == true) {
 		const mas = data.categories;
 		mas.sort((a, b) => {
@@ -97,13 +103,13 @@ function showItems(items)
 		node.setAttribute("id", element.id);
 		counter++;
 		let img = document.createElement('img');
-		img.className='_img';
+		img.classList.toggle('item_img');
 		img.src = element.gallery_images[0].url;
 		let descr = document.createElement('p');
 		let title = document.createElement('p');
-		title.classList.toggle('_name');
+		title.classList.toggle('item_name');
 		title.innerHTML = element.title;
-		descr.classList.toggle('_description');
+		descr.classList.toggle('item_description');
 		descr.innerHTML = element.description;
 		let div = document.createElement('div');
 		node.append(img);
@@ -134,7 +140,9 @@ const itemClick = (selected_item) => {
 		});
 	document.getElementById("item_title").innerHTML = item.title;
 	document.getElementById("item_descr").innerText = item.description;
-	document.getElementById("item_full_descr").innerHTML = item.long_description;
+
+	let plain_descr = item.long_description;
+	// document.getElementById("item_full_descr").innerHTML = plain_descr;
 
 	removeElements([...document.querySelector("#slider").children])
 	let images = item.gallery_images;
