@@ -1,7 +1,7 @@
 {
   "name":"Lorem ipsum dolor sit amet",
-  "description":"Nunc gravida, sapien vitae malesuada lobortis, sem nibh consequat nisl, at porta justo enim eget tellus. \nSuspendisse in finibus sapien, suscipit dignissim nulla. Donec vel porttitor nisi, et varius ante. Ut eu dolor nisi. Ut eu dolor mauris. Integer vitae blandit est. Ut ut dui nisl. Cras pellentesque dignissim lobortis. Donec id eros tincidunt, malesuada leo nec, sagittis nulla. Curabitur efficitur aliquam nisi, eget sollicitudin lacus sodales in.",
-  "accentColor":"221f20",
+  "description":"Nunc gravida,is, sem nibh consequat nisl, at porta justo enim eget tellus. \nSuspendisse in finibus sapien, suscipit dignissim nulla. Donec vel porttitor nisi, et varius ante. Ut eu dolor nisi. Ut eu dolor mauris. Integer vitae blandit est. Ut ut dui nisl. Cras pellentesque dignissim lobortis. Donec id eros tincidunt, malesuada leo nec, sagittis nulla. Curabitur efficitur aliquam nisi, eget sollicitudin lacus sodales in.",
+  "accentColor":"555",
   "accentColorSecondary":"03A9F4",
   "enable_multiple_lists":true,
   "categories":[
@@ -28,13 +28,6 @@
     },
     {
       "id": 301,
-      "name": "Category 2",
-      "positionNumber": 2,
-      "items": [110, 101, 107, 105],
-      "active": false
-    },
-    {
-      "id": 305,
       "name": "Category 2",
       "positionNumber": 2,
       "items": [110, 101, 107, 105],

@@ -6,10 +6,9 @@ const fetchAll = async () => {
 		data = await response.json();
 		initialise(data);
 	} catch (error) {
-		console.log(error);
+		console.log({error});
 	}
 }
-
 document.addEventListener('loadend', fetchAll())
 
 const initialise = () => {
@@ -18,8 +17,11 @@ const initialise = () => {
 	document.getElementById("descr").firstElementChild.innerHTML =
 		data['description'];
 
+	document.title = data.name;
+
 	cteateIcon();
 	setColors();
+
 
 	if (data.enable_multiple_lists == true) {
 		showCategories();
@@ -30,6 +32,7 @@ const initialise = () => {
 
 	}
 }
+
 const cteateIcon = () => {
 	let link = document.createElement('link');
 	link.setAttribute("rel", "shortcut icon");
@@ -40,29 +43,44 @@ const cteateIcon = () => {
 
 const setColors = () =>{
 	document.getElementsByTagName('body')[0].
-		style.backgroundColor = "#"+data.accentColorSecondary;
+		style.backgroundColor = `#${data.accentColorSecondary}`
 	document.getElementsByTagName('body')[0].
 		style.color = "#"+data.accentColor;
 		
 }
 const showCategories = () => {
-	const mas = data.categories;
-	mas.sort((a, b) => {
+	
+	const { categories } = data;	
+
+	categories.sort((a, b) => {
 		if (a.positionNumber < b.positionNumber) return -1;
 		if (a.positionNumber > b.positionNumber) return 1;
 		return 0;
 	});
-	const cat_nodes = [];
-	for (let i = 0; i < mas.length; i++) {
-		if (mas[i].active) {
+
+/* 	const cat_nodes = [];
+	for (let i = 0; i < categories.length; i++) {
+		if (categories[i].active) {
 			let node = document.createElement("div");
 			node.classList.toggle('category_plane');
-			node.innerHTML = mas[i].name;
-			node.setAttribute("id", mas[i].id);
+			node.innerHTML = categories[i].name;
+			node.setAttribute("id", categories[i].id);
 			node.addEventListener('click', OnCategoryClick);
 			cat_nodes.push(node);
 		}
-	}
+	} */
+
+	const cat_nodes = categories.map(item => {
+		if (item.active) {
+			let node = document.createElement("div");
+			node.classList.toggle('category_plane');
+			node.innerHTML = item.name;
+			node.setAttribute("id", item.id);
+			node.addEventListener('click', OnCategoryClick);
+			return node
+		}
+	})
+
 	cat_nodes.forEach(element => {
 		document.getElementById("categories").appendChild(element);
 	})
@@ -71,6 +89,7 @@ const showCategories = () => {
 }
 
 function OnCategoryClick(e) {
+
 	let id = e.srcElement.id;
 	[...document.getElementsByClassName("category_plane")].forEach(element => {
 		element.classList.toggle('tapped', false);
@@ -79,6 +98,7 @@ function OnCategoryClick(e) {
 	let text = e.srcElement.innerHTML;
 	categoryClick(id, text);
 }
+
 function categoryClick(id, text) {
 	let selected_cat;
 	const items = [];
@@ -166,8 +186,10 @@ const itemClick = (selected_item) => {
 	removeElements([...document.querySelector("#slider").children])
 	let images = item.gallery_images;
 
-	if (images.length == 0) {
-	} else if (images.length == 1) {
+	if (images.length === 0) {
+		return;
+	} 
+	else if (images.length === 1) {
 		let container = document.createElement("div");
 		container.classList.toggle('slideshow-container');
 		let image = document.createElement("img");
@@ -256,7 +278,7 @@ function getFrame(url) {
 }
 
 function insertLinks(text) {
-	let r = new RegExp(/(http|https):\/\/([\w!:.?+=&%@!\-\/])+.([/\/\w!:.?+=&%@!\-])+/g);
+	const r = /(http|https):\/\/([\w!:.?+=&%@!\-\/])+.([/\/\w!:.?+=&%@!\-])+/g
 	let res = text.replace(r, replacer);
 	return res;
 }
