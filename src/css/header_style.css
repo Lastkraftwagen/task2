@@ -17,7 +17,6 @@ body
 
 #name {
     width: 100%;
-    height: rem(70px);
     background-color: antiquewhite;
     text-align: center;
 }
@@ -31,17 +30,16 @@ body
 
 .descr_holder
 {
-    height: 500px;
+    height: 200px;
     width: 100%;
-    background-color: #ccc;
     display: flex;
     justify-content: center;
 }
 
 #descr
 {
-    height: 70%;
-    width: 50%;
+    height: 90%;
+    width: 70%;
     display: flex;
     background-color: white;
     align-content: center;

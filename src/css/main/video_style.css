@@ -1,15 +1,31 @@
-.video_holder
-{
-padding: 20px;
-width: 600px;
+#video_holder {
+  padding: 20px;
+  width: 750px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
 }
 
-.video_title{
+
+@media screen and (max-width: 768px) {
+  #video_holder {
+    padding: 0px;
+    width: 420px;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+}
+
+.video_title {
   background-color: aliceblue;
-
+  align-content: center;
+  height: 10%;
+  padding: 0;
 }
 
-.video{
-  height: 600px;
+.video {
   width: 100%;
+  height: 90%;
 }

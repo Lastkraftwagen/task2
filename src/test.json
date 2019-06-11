@@ -32,6 +32,13 @@
       "positionNumber": 2,
       "items": [110, 101, 107, 105],
       "active": false
+    },
+    {
+      "id": 305,
+      "name": "Category 2",
+      "positionNumber": 2,
+      "items": [110, 101, 107, 105],
+      "active": true
     }
   ],
   "icon": {

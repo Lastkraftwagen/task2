@@ -1,17 +1,16 @@
-
 let data;
 
 const fetchAll = async () => {
 	try {
 		const response = await fetch('./test.json');
 		data = await response.json();
-		initialise(data)
-
+		initialise(data);
 	} catch (error) {
 		console.log(error);
 	}
 }
 
+document.addEventListener('loadend', fetchAll())
 
 const initialise = () => {
 	document.getElementById("name").firstElementChild.innerHTML =
@@ -19,53 +18,67 @@ const initialise = () => {
 	document.getElementById("descr").firstElementChild.innerHTML =
 		data['description'];
 
-		let link = document.createElement('link');
-		link.setAttribute("rel", "shortcut icon");
-		link.setAttribute("type", "image/png");
-		link.href = data.icon.file.url;
-		document.getElementsByTagName('head')[0].append(link);
+	cteateIcon();
+	setColors();
 
 	if (data.enable_multiple_lists == true) {
-		const mas = data.categories;
-		mas.sort((a, b) => {
-			if (a.positionNumber < b.positionNumber) return -1;
-			if (a.positionNumber > b.positionNumber) return 1;
-			return 0;
-		});
-		const cat_nodes = [];
-		for (let i = 0; i < mas.length; i++) {
-			if(mas[i].active){
-				let node = document.createElement("div");
-				node.className = 'category_plane';
-				node.innerHTML = mas[i].name;
-				node.setAttribute("id", mas[i].id)
-				cat_nodes.push(node);
-			}
-		}
-		cat_nodes.forEach(element => {
-			document.getElementById("categories").appendChild(element);
-		})
-		const temp = document.getElementById('categories').children;
-		for (let i = 0; i < temp.length; i++) {
-			temp[i].addEventListener('click', OnCategoryClick);
-		}	
-		categoryClick(temp[0].id, temp[0].innerHTML)
+		showCategories();
 	}
-	else{
+	else {
 		document.getElementById('category_name').style.display = 'none';
 		showItems(data.items);
-		
+
 	}
 }
+const cteateIcon = () => {
+	let link = document.createElement('link');
+	link.setAttribute("rel", "shortcut icon");
+	link.setAttribute("type", "image/png");
+	link.href = data.icon.file.url;
+	document.getElementsByTagName('head')[0].append(link);
+}
 
-document.addEventListener('loadend', fetchAll())
+const setColors = () =>{
+	document.getElementsByTagName('body')[0].
+		style.backgroundColor = "#"+data.accentColorSecondary;
+	document.getElementsByTagName('body')[0].
+		style.color = "#"+data.accentColor;
+		
+}
+const showCategories = () => {
+	const mas = data.categories;
+	mas.sort((a, b) => {
+		if (a.positionNumber < b.positionNumber) return -1;
+		if (a.positionNumber > b.positionNumber) return 1;
+		return 0;
+	});
+	const cat_nodes = [];
+	for (let i = 0; i < mas.length; i++) {
+		if (mas[i].active) {
+			let node = document.createElement("div");
+			node.classList.toggle('category_plane');
+			node.innerHTML = mas[i].name;
+			node.setAttribute("id", mas[i].id);
+			node.addEventListener('click', OnCategoryClick);
+			cat_nodes.push(node);
+		}
+	}
+	cat_nodes.forEach(element => {
+		document.getElementById("categories").appendChild(element);
+	})
+	cat_nodes[0].classList.toggle('tapped');
+	categoryClick(cat_nodes[0].id, cat_nodes[0].innerHTML)
+}
 
 function OnCategoryClick(e) {
 	let id = e.srcElement.id;
+	[...document.getElementsByClassName("category_plane")].forEach(element => {
+		element.classList.toggle('tapped', false);
+	});
+	e.srcElement.classList.toggle("tapped");
 	let text = e.srcElement.innerHTML;
 	categoryClick(id, text);
 }
-
 function categoryClick(id, text) {
 	let selected_cat;
 	const items = [];
@@ -85,38 +98,45 @@ function categoryClick(id, text) {
 	showItems(items);
 }
 
-function showItems(items)
-{
-	let el = document.querySelector("#items_holder");
+function showItems(items) {
+	let menu_block = document.querySelector("#items_holder");
 	removeElements([...document.querySelectorAll(".item")]);
+	
 	items.sort((a, b) => {
 		if (a.position < b.position) return -1;
 		if (a.position > b.position) return 1;
 		return 0;
 	});
+	
 	let counter = 0;
 	items.forEach(element => {
 		let node = document.createElement("div");
-		if (counter == 0) node.className = "item selected";
-		else node.className = "item";
-		node.setAttribute('onclick', "OnItemClick("+element.id+")");
+		if (counter == 0) 
+			node.className = "item selected";
+		else 
+			node.className = "item";
+
+		node.setAttribute('onclick', "OnItemClick(" + element.id + ")");
 		node.setAttribute("id", element.id);
 		counter++;
 		let img = document.createElement('img');
-		img.classList.toggle('item_img');
-		img.src = element.gallery_images[0].url;
+		let div = document.createElement('div');
 		let descr = document.createElement('p');
 		let title = document.createElement('p');
+
+		img.classList.toggle('item_img');
 		title.classList.toggle('item_name');
-		title.innerHTML = element.title;
 		descr.classList.toggle('item_description');
+
+		img.src = element.gallery_images[0].url;
+		title.innerHTML = element.title;
 		descr.innerHTML = element.description;
-		let div = document.createElement('div');
+
 		node.append(img);
 		div.append(title);
 		div.append(descr);
 		node.append(div);
-		el.append(node);
+		menu_block.append(node);
 	});
 	itemClick(document.querySelector(".selected"));
 }
@@ -125,7 +145,6 @@ function OnItemClick(id) {
 	let selected_item = document.getElementById(id);
 	itemClick(selected_item);
 }
-
 const itemClick = (selected_item) => {
 	let el = document.querySelector(".selected");
 	el.className = 'item';
@@ -142,7 +161,7 @@ const itemClick = (selected_item) => {
 	document.getElementById("item_descr").innerText = item.description;
 
 	let plain_descr = item.long_description;
-	document.getElementById("item_full_descr").innerHTML = plain_descr;
+	document.getElementById("item_full_descr").innerHTML = insertLinks(plain_descr);
 
 	removeElements([...document.querySelector("#slider").children])
 	let images = item.gallery_images;
@@ -150,23 +169,24 @@ const itemClick = (selected_item) => {
 	if (images.length == 0) {
 	} else if (images.length == 1) {
 		let container = document.createElement("div");
-		container.className = 'slideshow-container';
+		container.classList.toggle('slideshow-container');
 		let image = document.createElement("img");
-		image.className = 'fade';
+		image.classList.toggle('fade');
 		image.src = images[0].url;
 		container.appendChild(image);
 		document.getElementById("slider").appendChild(container);
 	}
 	else {
 		let container = document.createElement("div");
-		container.className = 'slideshow-container';
+		container.classList.toggle('slideshow-container');
 		images.forEach(element => {
 			let node = document.createElement("div");
-			node.className = "mySlides fade"
+			node.classList.toggle("fade");
+			node.classList.toggle("mySlides");
 			let img = document.createElement("img");
 			img.src = element.url;
 			let descr = document.createElement("div");
-			descr.className = 'text';
+			descr.classList.toggle('text');
 			node.appendChild(img);
 			node.appendChild(descr);
 			container.appendChild(node);
@@ -199,6 +219,8 @@ const itemClick = (selected_item) => {
 	removeElements([...document.querySelector("#video_holder").children])
 
 	if (item.videoUrl != null) {
+		document.getElementById("video_holder").style.display = 'flex';
+
 		let title = document.createElement("p");
 		title.className = 'video_title';
 		title.innerHTML = item.videoTitle;
@@ -209,6 +231,10 @@ const itemClick = (selected_item) => {
 		video.setAttribute('allowfullscreen', "");
 		document.getElementById("video_holder").appendChild(title);
 		document.getElementById("video_holder").appendChild(video);
+	}
+	else{
+		document.getElementById("video_holder").style.display = 'none';
+
 	}
 }
 
@@ -228,3 +254,13 @@ function getFrame(url) {
 		return 'error';
 	}
 }
+
+function insertLinks(text) {
+	let r = new RegExp(/(http|https):\/\/([\w!:.?+=&%@!\-\/])+.([/\/\w!:.?+=&%@!\-])+/g);
+	let res = text.replace(r, replacer);
+	return res;
+}
+
+const replacer = (str, offset, s) => {
+	return "<a href='" + str + "' target ='_blank'>" + str + "</a>";
+};

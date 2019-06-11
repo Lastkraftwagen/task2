@@ -9,8 +9,22 @@ body {
 
 .mySlides {
   display: none;
-  height: 280px;
+  height: 500px;
 
+}
+
+@media screen and (max-width: 768px) {
+  .mySlides {
+    display: none;
+    height: 280px;
+  }
+  #slider img {
+    vertical-align: middle;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 
 .dot_panel{
@@ -24,12 +38,13 @@ body {
   max-height: 100%;
 }
 #slider{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 /* Slideshow container */
 
 .slideshow-container {
-
-  height: 300px;
   position: relative;
   margin: auto;
 }
@@ -58,16 +73,6 @@ body {
 
 .prev:hover, .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
-}
-
-.text {
-  /* color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center; */
 }
 
 .dot {
@@ -107,13 +112,5 @@ body {
   }
   to {
     opacity: 1
-  }
-}
-
-/* On smaller screens, decrease text size */
-
-@media only screen and (max-width: 300px) {
-  .prev, .next, .text {
-    font-size: 11px
   }
 }
